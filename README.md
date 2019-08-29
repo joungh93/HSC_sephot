@@ -2,7 +2,7 @@
 PSFEx + Source Extractor photometry of HSC images using two fields of gri images
 
 # ----- Basic information ----- #
-Field name : 'M81_1', 'M81_2'
+Field name : 'M81_1', 'M81_2' \n
 Observer : Bell
 Retrieved from SMOKA
 Reduced using hscPipe ver 6.0.7
