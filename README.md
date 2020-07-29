@@ -1,27 +1,23 @@
-
-SExtractor-photometry-HSC-images
------
-PSFEx + Source Extractor photometry of HSC images using two fields of gri images
+# HSC_sephot
+(updated on 2020. 07. 29.)
 
 
-Basics
------
-Field name : 'M81_1', 'M81_2' 
+## Description
+[PSFEx](https://www.astromatic.net/software/psfex) + [SExtractor](https://www.astromatic.net/software/sextractor) photometry of the images obtained with [Subaru/Hyper Suprime-Cam (HSC)](https://www.subarutelescope.org/Observing/Instruments/HSC/index.html)
 
-Observer : Bell 
 
-Retrieved from SMOKA  
-
-Reduced using hscPipe ver 6.0.7 
+## Example data sets
+* Field name: 'M81_1', 'M81_2'
+* Observer: Eric Bell
+* Retrieved from [SMOKA](https://smoka.nao.ac.jp/)
+* Reduction pipeline: [hscPipe6](https://hsc.mtk.nao.ac.jp/pipedoc/pipedoc_6_e/index.html)
 
 
 Prerequisite
 -----
-For PSFEx : prepsfex.param, prepsfex.sex, config.psfex
-
-For SExtractor : output.param, config.sex
-
-For IRAF/PyRAF tasks : pyraf (in Anaconda 3)
+* For PSFEx : prepsfex.param, prepsfex.sex, config.psfex
+* For SExtractor : output.param, config.sex
+* For IRAF/PyRAF tasks : pyraf (in Anaconda 3)
 
 
 Running sequence
