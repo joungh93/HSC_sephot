@@ -13,24 +13,9 @@
 * Reduction pipeline: [hscPipe6](https://hsc.mtk.nao.ac.jp/pipedoc/pipedoc_6_e/index.html)
 
 
-Prerequisite
+## Prerequisite
 -----
-* For PSFEx : prepsfex.param, prepsfex.sex, config.psfex
-* For SExtractor : output.param, config.sex
-* For IRAF/PyRAF tasks : pyraf (in Anaconda 3)
-
-
-Running sequence
------
-init_patch.py    # Initial declaration of patches
-
-mk_single.py    # HSC multiple extension images -> single extension images
-
-mkscr_psfex.py    # Running PSFEx w/ psfex_all.sh
-
-mk_psfreg.py    # Writing region files of PSF stars from PSFEx
-
-mk_mchcomb.py    # Making PSF-matched images and combining them
-
-mkscr_sephot.py    # Running SExtractor DUAL mode photometry
+* [PSFEx](https://psfex.readthedocs.io/en/latest/) and its configuration files: prepsfex.param, config.psfex
+* [SExtractor](https://www.astromatic.net/pubsvn/software/sextractor/trunk/doc/sextractor.pdf) and its configuration files: output.param, prepsfex.sex, config.sex
+* [SWarp](https://www.astromatic.net/pubsvn/software/swarp/trunk/doc/swarp.pdf)
 
