@@ -14,8 +14,8 @@
 
 
 ## Prerequisite
------
 * [PSFEx](https://psfex.readthedocs.io/en/latest/) and its configuration files: prepsfex.param, config.psfex
 * [SExtractor](https://www.astromatic.net/pubsvn/software/sextractor/trunk/doc/sextractor.pdf) and its configuration files: output.param, prepsfex.sex, config.sex
 * [SWarp](https://www.astromatic.net/pubsvn/software/swarp/trunk/doc/swarp.pdf)
 
+-----
