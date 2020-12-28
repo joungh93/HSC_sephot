@@ -14,8 +14,8 @@
 
 
 ## Prerequisite
-* [PSFEx](https://psfex.readthedocs.io/en/latest/) and its configuration files: prepsfex.param, config.psfex
-* [SExtractor](https://www.astromatic.net/pubsvn/software/sextractor/trunk/doc/sextractor.pdf) and its configuration files: output.param, prepsfex.sex, config.sex
+* [PSFEx](https://psfex.readthedocs.io/en/latest/) and its configuration files: [prepsfex.param](https://github.com/joungh93/HSC_sephot/blob/master/prepsfex.param), [config.psfex](https://github.com/joungh93/HSC_sephot/blob/master/config.psfex)
+* [SExtractor](https://www.astromatic.net/pubsvn/software/sextractor/trunk/doc/sextractor.pdf) and its configuration files: [output.param](https://github.com/joungh93/HSC_sephot/blob/master/output.param), [prepsfex.sex](https://github.com/joungh93/HSC_sephot/blob/master/prepsfex.sex), [config.sex](https://github.com/joungh93/HSC_sephot/blob/master/config.sex)
 * [SWarp](https://www.astromatic.net/pubsvn/software/swarp/trunk/doc/swarp.pdf)
 
 -----
