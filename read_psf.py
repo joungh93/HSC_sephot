@@ -48,6 +48,7 @@ for i in np.arange(len(ic.fields)):
 		                                colname[3] : prepsf['ell'][sel],
 		                                colname[4] : data_psf['fwhm'][sel],
 		                                colname[5] : data_psf['ell'][sel]})
+		                                # Axis ratio b/a : 1.0/colname[3] vs 1.0-colname[5]
 
 		exec("df_name = 'df_psf_"+flt+"{0:d}'".format(i))
 		d_prepsf.to_pickle(dir_psf+df_name+'.pkl')
