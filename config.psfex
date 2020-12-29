@@ -84,7 +84,7 @@ CHECKIMAGE_CUBE N               # Save check-images as datacubes (Y/N) ?
 PSF_DIR                         # Where to write PSFs (empty=same as input)
 PSF_SUFFIX      .psf            # Filename extension for output PSF filename
 VERBOSE_TYPE    NORMAL          # can be QUIET,NORMAL,LOG or FULL
-WRITE_XML       N                 # Write XML file (Y/N)?
+WRITE_XML       Y                 # Write XML file (Y/N)?
 XML_NAME        psfex.xml       # Filename for XML output
 XSL_URL         file:///usr/share/psfex/psfex.xsl
                                 # Filename for XSL style-sheet
