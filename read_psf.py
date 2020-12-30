@@ -88,18 +88,3 @@ for i in np.arange(len(ic.fields)):
 
 # Printing the running time  
 print("--- %s seconds ---" % (time.time() - start_time))
-
-
-
-# tree = parse("PSFEx/psf_M81_2-R.xml")
-# root = tree.getroot()
-
-# tb1 = root.findall("RESOURCE")[0].findall("RESOURCE")[0].findall("TABLE")[0]
-
-# tb1_field = tb1.findall("FIELD") 
-# for ff in tb1_field: 
-#     print(ff.attrib) 
-
-# tb1_data = tb1.findall("DATA")[0].findall("TABLEDATA")[0].findall("TR")[0].findall("TD")
-# for gg in tb1_data: 
-#     print(gg.text) 
