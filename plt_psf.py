@@ -145,16 +145,7 @@ for i in np.arange(len(psf_pkl)):
     plt.savefig(dir_psf+'figpsf-'+f_name+'.pdf', dpi=300)
     plt.savefig(dir_psf+'figpsf-'+f_name+'.png', dpi=300)
     plt.close()
-
-    # ax1.plot([np.median(df_psf['fwhm_sep']), np.median(df_psf['fwhm_sep'])], [0.0, 1.15*np.max(hist_fwhm[0])],
- #             '--', color='red', linewidth=lw+0.25, alpha=0.8)
-    # ax1.text(0.95, 0.95, '{0:.2f} pix={1:.2f}"'.format(np.median(df_psf['fwhm_sep']), ic.pixscale*np.median(df_psf['fwhm_sep'])),
-    #          ha='right', va='top', transform=ax1.transAxes, fontsize=fs, color='r')
-
-    # print('Median seeing FWHM of '+f_name+ \
-    #     ' : {0:.2f} pix = {1:.2f} arcsec'.format(np.median(df_psf['fwhm_sep']),
-    #                                              ic.pixscale*np.median(df_psf['fwhm_sep'])))
-
+    
 
 # Printing the running time  
 print("--- %s seconds ---" % (time.time() - start_time))
