@@ -31,12 +31,12 @@ After revising ``init_cfg.py``, the following sequence of commands will work wel
 ```
 $ tmux
 $ ipython
->>> run mk_coadd.py
->>> run mkscr_psfex.py
->>> run read_psf.py
->>> run plt_psf.py
->>> run mk_mchcomb.py
->>> run mkscr_sephot.py
+> run mk_coadd.py
+> run mkscr_psfex.py
+> run read_psf.py
+> run plt_psf.py
+> run mk_mchcomb.py
+> run mkscr_sephot.py
 (Ctrl + b + d)
 ```
 
