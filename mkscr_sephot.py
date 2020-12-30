@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Wed Aug 21 20:58:50 2019
+Created on Thu May 28 10:43:14 2020
 
 @author: jlee
 """
@@ -14,34 +14,46 @@ import numpy as np
 import os
 from astropy.io import fits
 
-import init_patch as ip
+import init_cfg as ic
 
 
-# ----- Making script for all the patches ----- #
+if ic.use_backsub:
+    prefix = 'b'
+else:
+    prefix = ''
+
+
+# ----- Making SExtractor photometry scripts ----- #
+dir_img = "Images/"
+dir_psf = "PSFEx/"
+fwhm_out = np.loadtxt(dir_psf+"fwhm_out.txt")
+
 f = open('sephot_all.sh','w')
 f.write(' \n')
 f.write('##################################'+'\n')
 f.write('##### Scripts for SExtractor #####'+'\n')
 f.write('##################################'+'\n')        
 f.write(' \n')
-for i in np.arange(len(ip.patchstr_dir)):
-    f.write('# ----- HSC patch : '+ip.patchstr_img[i]+'----- #'+'\n')
-    f.write(' \n')    
-    f.write('sex Comb'+ip.patchstr_sex[i]+'.fits,G'+ip.patchstr_sex[i]+'.fits -c config.sex -CATALOG_NAME G'+ip.patchstr_sex[i]+'.cat -DETECT_THRESH 2.0 -ANALYSIS_THRESH 2.0 -PHOT_APERTURES 4.0,6.0,8.0,10.0,12.0,18.0,24.0,33.3 -MAG_ZEROPOINT 27.0 -GAIN 12780.0 -SEEING_FWHM 3.8 -BACK_SIZE 32 -PSF_NAME prepsfex_g.psf'+'\n')    
-    f.write('sex Comb'+ip.patchstr_sex[i]+'.fits,R'+ip.patchstr_sex[i]+'.fits -c config.sex -CATALOG_NAME R'+ip.patchstr_sex[i]+'.cat -DETECT_THRESH 2.0 -ANALYSIS_THRESH 2.0 -PHOT_APERTURES 4.0,6.0,8.0,10.0,12.0,18.0,24.0,33.3 -MAG_ZEROPOINT 27.0 -GAIN 10080.0 -SEEING_FWHM 3.6 -BACK_SIZE 32 -PSF_NAME prepsfex_r.psf'+'\n')    
-    f.write('sex Comb'+ip.patchstr_sex[i]+'.fits,I'+ip.patchstr_sex[i]+'.fits -c config.sex -CATALOG_NAME I'+ip.patchstr_sex[i]+'.cat -DETECT_THRESH 2.0 -ANALYSIS_THRESH 2.0 -PHOT_APERTURES 4.0,6.0,8.0,10.0,12.0,18.0,24.0,33.3 -MAG_ZEROPOINT 27.0 -GAIN 10080.0 -SEEING_FWHM 3.9 -BACK_SIZE 32 -PSF_NAME prepsfex_i.psf'+'\n')
-    f.write(' \n')     
-    f.write('rm -rfv G'+ip.patchstr_sex[i]+'.fits R'+ip.patchstr_sex[i]+'.fits I'+ip.patchstr_sex[i]+'.fits'+'\n')
-    f.write('rm -rfv mG'+ip.patchstr_sex[i]+'.fits mR'+ip.patchstr_sex[i]+'.fits'+'\n')
-    f.write('rm -rfv ker_G'+ip.patchstr_sex[i]+'.fits')
-    f.write('rm -rfv ker_R'+ip.patchstr_sex[i]+'.fits')
-    f.write('rm -rfv Comb'+ip.patchstr_sex[i]+'.fits')
-    f.write(' \n\n') 
+
+for i in np.arange(len(ic.fields)):
+    f.write('\n# ----- '+ic.fields[i]+' ----- #\n')
+    for j in np.arange(len(ic.filters)):
+        flt = ic.filters[j].split('-')[1]
+        f.write('sex '+dir_img+'c'+prefix+ic.fields[i]+'.fits,'+dir_img+prefix+ic.fields[i]+'-'+flt+'.fits -c config.sex ')
+        f.write('-CATALOG_NAME '+prefix+ic.fields[i]+'-'+flt+'.cat ')
+        f.write(f"-DETECT_MINAREA {ic.MINAR_sep:d} -DETECT_THRESH {ic.THRES_sep:.1f} -ANALYSIS_THRESH {ic.THRES_sep:.1f} ")
+        f.write('-FILTER_NAME '+ic.FILTR_sep+f" -DEBLEND_NTHRESH {ic.DEBLN_sep:d} -DEBLEND_MINCONT {ic.DEBLM_sep:.3f} ")
+        if ic.APHOT:
+            f.write('-PHOT_APERTURES '+ic.APERs+' ')
+        f.write(f"-MAG_ZEROPOINT {ic.MAG0:.1f} ")
+        f.write(f"-GAIN {ic.GAIN0[j]:.1f} -SEEING_FWHM {fwhm_out[i]*ic.pixscale:.2f} ")
+        f.write(f"-BACK_SIZE {ic.BACKS_sep:d} -BACKPHOTO_TYPE LOCAL ")
+        f.write('-PSF_NAME '+dir_psf+'psf_'+ic.filters[j]+'.psf\n')
 f.close()
 
-# ----- Running scripts for PSFEx ----- #
-os.system('rm -rfv *.lis')
-os.system('sh sephot_all.sh')  
+
+# ----- Running scripts for SExtractor ----- #
+os.system('sh sephot_all.sh')
 
 
 # Printing the running time  
