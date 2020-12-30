@@ -145,7 +145,7 @@ for i in np.arange(len(psf_pkl)):
     plt.savefig(dir_psf+'figpsf-'+f_name+'.pdf', dpi=300)
     plt.savefig(dir_psf+'figpsf-'+f_name+'.png', dpi=300)
     plt.close()
-    
+
 
 # Printing the running time  
 print("--- %s seconds ---" % (time.time() - start_time))
