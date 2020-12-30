@@ -11,50 +11,62 @@ import time
 start_time = time.time()
 
 import numpy as np
-import os
+import glob, os, copy
+import pandas as pd
 from astropy.io import fits
+from astropy.convolution import Gaussian2DKernel, convolve
 
-import init_patch as ip
-
-from pyraf import iraf
-iraf.images()
-iraf.immatch()
+import init_cfg as ic
 
 
-# ----- Making combined images ----- #
-for i in np.arange(len(ip.patchstr_dir)):
-	print("Patch : "+ip.patchstr_dir[i])
-	img_G = 'G'+ip.patchstr_sex[i]+'.fits'
-	img_R = 'R'+ip.patchstr_sex[i]+'.fits'
-	img_I = 'I'+ip.patchstr_sex[i]+'.fits'
+dir_psf = "PSFEx/"
 
-	os.system('ls -1 '+img_G+' '+img_R+' > inp'+ip.patchstr_sex[i]+'.lis')
-	f = open('ker'+ip.patchstr_sex[i]+'.lis','w')
-	f.write('ker_'+img_G+'\n')
-	f.write('ker_'+img_R+'\n')
-	f.close()
-	os.system('rm -rfv '+'Comb'+ip.patchstr_sex[i]+'.fits')
-	os.system('rm -rfv '+'m'+img_G+' '+'m'+img_R)
-	os.system('rm -rfv '+'ker_'+img_G+' '+'ker_'+img_R)
+if ic.use_backsub:
+	prefix = 'b'
+else:
+	prefix = ''
 
-	try:
-		iraf.psfmatch(input='@inp'+ip.patchstr_sex[i]+'.lis', referenc=img_I,
-			          psfdata='psf_I'+ip.patchstr_sex[i]+'.reg', kernel='@ker'+ip.patchstr_sex[i]+'.lis',
-			          output='m//@inp'+ip.patchstr_sex[i]+'.lis', convolu='image', dnx=31, dny=31, pnx=15, pny=15)
 
-		dat_G = fits.getdata('m'+img_G)
-		dat_R = fits.getdata('m'+img_R)
-		dat_I = fits.getdata(img_I)
+# ----- FWHMs of images ----- #
+fwhm_in = np.zeros((len(ic.fields), len(ic.filters)))
+for i in np.arange(len(ic.fields)):
+	print("\n----- Field : "+ic.fields[i]+" -----")
+	for j in np.arange(len(ic.filters)):
+		flt = ic.filters[j].split('-')[1]
+		xml_psf = pd.read_csv(dir_psf+"xml_psf_"+flt+f"{i:d}.csv")
+		fwhm_in[i,j] = xml_psf['FWHM_Mean'].values[0]
+		print(ic.filters[j]+f" mean PSF FWHM : {fwhm_in[i,j]:.3f} pix")
+fwhm_out = np.max(fwhm_in, axis=1)
+j_ref = np.argmax(fwhm_in, axis=1)
 
-		fits.writeto('Comb'+ip.patchstr_sex[i]+'.fits', (dat_G+dat_R+dat_I)/3.0, overwrite=True)
+sigma_in = fwhm_in / np.sqrt(8.*np.log(2.))
+sigma_out = fwhm_out / np.sqrt(8.*np.log(2.))
+np.savetxt(dir_psf+"fwhm_out.txt", fwhm_out, fmt="%.4f")
 
-	except:
-		dat_G = fits.getdata(img_G)
-		dat_R = fits.getdata(img_R)
-		dat_I = fits.getdata(img_I)
 
-		fits.writeto('Comb'+ip.patchstr_sex[i]+'.fits', (dat_G+dat_R+dat_I)/3.0, overwrite=True)
+# ----- Combining PSF-matched images ----- #
+for i in np.arange(len(ic.fields)):
+	flt0 = ic.filters[0].split('-')[1]
+	img = fits.getdata("Images/"+prefix+ic.fields[i]+"-"+flt0+".fits")
+	cimg = np.zeros((img.shape[0], img.shape[1], len(ic.filters)))
+	out = "c"+prefix+ic.fields[i]+".fits"
+	print("\nWriting "+out+" ...")
+	for j in np.arange(len(ic.filters)):
+		flt = ic.filters[j].split('-')[1]
+		img, hdr = fits.getdata("Images/"+prefix+ic.fields[i]+"-"+flt+".fits",
+			                    header=True)
+		if (j == j_ref[i]):
+			cimg[:,:,j] = img
+		else:
+			sigma_kernel = np.sqrt(sigma_out[i]**2.0 - sigma_in[i,j]**2.0)
+			kernel = Gaussian2DKernel(x_stddev=sigma_kernel, y_stddev=sigma_kernel)
+			img_conv = convolve(img, kernel)
+			cimg[:,:,j] = img_conv
+		cimg2 = np.median(cimg, axis=2)
+		hdr['BITPIX'] = -32
+		fits.writeto("Images/"+out, cimg2, hdr, overwrite=True)
+	print("---> Reference filter: "+ic.filters[j_ref[i]])
 
 
 # Printing the running time  
-print("--- %s seconds ---" % (time.time() - start_time))
+print("\n--- %s seconds ---" % (time.time() - start_time))
