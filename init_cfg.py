@@ -31,7 +31,8 @@ BACKS_swp = 64    # BACK_SIZE for SWarp configuration
 use_backsub = True  # if True, SExtractor photometry will be applied to background-subtracted images
 MAG0 = 27.0  # MAG_ZEROPOINT
 SEEING0 = 0.7  # SEEING_FWHM
-GAIN0 = [12600, 9900, 9900]  # effective gain
+GAIN0 = [[12600, 9900, 9900],
+         [12600, 9900, 9900]]  # effective gain (n_fields x n_filters)
 
 ## PSFEx
 THRES_psf = 10.0  # DETECT_THRESH
