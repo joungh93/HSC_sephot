@@ -46,7 +46,7 @@ for i in np.arange(len(ic.fields)):
         if ic.APHOT:
             f.write('-PHOT_APERTURES '+ic.APERs+' ')
         f.write(f"-MAG_ZEROPOINT {ic.MAG0:.1f} ")
-        f.write(f"-GAIN {ic.GAIN0[j]:.1f} -SEEING_FWHM {fwhm_out[i]*ic.pixscale:.2f} ")
+        f.write(f"-GAIN {ic.GAIN0[i][j]:.1f} -SEEING_FWHM {fwhm_out[i]*ic.pixscale:.2f} ")
         f.write(f"-BACK_SIZE {ic.BACKS_sep:d} -BACKPHOTO_TYPE LOCAL ")
         f.write('-PSF_NAME '+dir_psf+'psf_'+ic.filters[j]+'.psf\n')
 f.close()
