@@ -13,8 +13,8 @@ import glob
 # ----- For coadding HSC processed images ----- #
 dir_coadd = "/data/jlee/HSCv6/M81/Bell/Red/rerun/object/deepCoadd-results/"    # Path for 'deepCoadd-results'
 filters = [f.split("/")[-1] for f in sorted(glob.glob(dir_coadd+"HSC-*"))]
-tracts = list(set([f.split("/")[-1] for f in sorted(glob.glob(dir_coadd+"HSC-*/*"))]))
-fields = ["M81_1", "M81_2"]    # HSC field names
+tracts = sorted(list(set([f.split("/")[-1] for f in sorted(glob.glob(dir_coadd+"HSC-*/*"))])))
+fields = ["M81_1", "M81_2"]    # HSC field names (order by tracts)
 # Check the center coordinates by displaying images with DS9
 ra0 = ["09:58:27.33", "10:03:04.23"]
 dec0 = ["+69:44:49.5", "+68:46:21.6"]
