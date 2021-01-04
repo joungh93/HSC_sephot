@@ -43,4 +43,4 @@ $ ipython
 
 
 ## Future works
-* :smiley:
+:smiley:
