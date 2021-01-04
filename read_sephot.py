@@ -36,7 +36,7 @@ if ic.APHOT:
 
 # ----- Reading catalogs & Making DataFrame ----- #
 if glob.glob("Catalogs/"):
-    os.system("rm -rfv Catalogs/")
+    os.system("rm -rfv Catalogs/*")
 else:
     os.system("mkdir Catalogs")
 
@@ -45,17 +45,21 @@ if ic.use_backsub:
 else:
     prefix = ''
 
-for i in np.arange(len(ic.fields)):
-    for j in np.arange(len(ic.filters)):
-        flt = ic.filters[j].split('-')[1]
+for j in np.arange(len(ic.filters)):
+    flt = ic.filters[j].split('-')[1]
+    df_name = "df_sep_"+flt
+    exec(df_name+" = pd.DataFrame()")
+    for i in np.arange(len(ic.fields)):
         filename = prefix+ic.fields[i]+"-"+flt+".cat"
         sep = np.genfromtxt(prefix+ic.fields[i]+"-"+flt+".cat",
                             dtype=None, encoding="ascii",
                             names=tuple(sep_cols))
-        d_sep = pd.DataFrame(sep)
-        df_name = "df_sep_"+flt+f"{i:d}"
-        d_sep.to_pickle("Catalogs/"+df_name+".pkl")
-        
+        sep = pd.DataFrame(sep)
+        fl = pd.DataFrame(np.repeat(ic.fields[i], len(sep)), columns=['FIELD_NAME'])
+        d_sep = pd.concat([sep, fl], axis=1, sort=False)
+        exec(df_name+" = "+df_name+".append(d_sep, sort=False, ignore_index=True)")
+    exec(df_name+".to_pickle('Catalogs/"+df_name+".pkl')")
+
 
 # Printing the running time
 print("--- %s seconds ---" % (time.time() - start_time))
