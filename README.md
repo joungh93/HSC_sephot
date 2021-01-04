@@ -26,7 +26,7 @@ cd /your_working_directory/
 git clone https://github.com/joungh93/HSC_sephot.git
 ```
 
-After revising ``init_cfg.py``, the following sequence of commands will work well.
+After revising ``init_cfg.py`` and ``output.param``, the following sequence of commands will work well.
 
 ```
 $ tmux
