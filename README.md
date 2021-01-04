@@ -1,5 +1,5 @@
 # HSC_sephot
-(updated on 2020. 12. 30.)
+(updated on 2021. 1. 4.)
 
 
 ## Description
@@ -37,9 +37,10 @@ $ ipython
 > run plt_psf.py
 > run mk_mchcomb.py
 > run mkscr_sephot.py
+> run read_sephot.py
 (Ctrl + b + d)
 ```
 
 
 ## Future works
-* 
+* :smiley:
