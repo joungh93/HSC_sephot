@@ -48,7 +48,7 @@ for i in np.arange(len(ic.fields)):
 		f.write(f"-SAMPLE_MINSN {ic.MINSN_psf:.1f} -SAMPLE_MAXELLIP {ic.MAXEL_psf:.2f} ")
 		f.write('-OUTCAT_TYPE ASCII_HEAD -OUTCAT_NAME psf_'+ic.fields[i]+'-'+flt+'.cat ')
 		f.write('-CHECKPLOT_TYPE NONE -XML_NAME psf_'+ic.fields[i]+'-'+flt+'.xml\n')
-		f.write('mv -v prepsfex_'+flt+'.psf psf_'+ic.fields[i]+'-'+flt+'.psf')
+		f.write('mv -v prepsfex_'+flt+'.psf psf_'+ic.fields[i]+'-'+flt+'.psf\n')
 		f.write('\n')
 	f.write('\n\n')
 f.close()
