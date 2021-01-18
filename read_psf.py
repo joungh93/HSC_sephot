@@ -53,7 +53,7 @@ for i in np.arange(len(ic.fields)):
 		                                colname[5] : 1.-data_psf['ell'][sel]})
 		                                # Axis ratio b/a : 1.0/colname[3] vs 1.0-colname[5]
 
-		exec("df_name = 'df_psf_"+flt+"{0:d}'".format(i))
+		exec("df_name = 'df_psf_"+flt+"-{0:d}'".format(i))
 		d_prepsf.to_pickle(dir_psf+df_name+'.pkl')
 
 
@@ -82,7 +82,7 @@ for i in np.arange(len(ic.fields)):
 			fld_data.append(key_data)
 
 		d_psf = pd.DataFrame(data=[fld_data], columns=fld_name)
-		exec("df_name = 'xml_psf_"+flt+"{0:d}'".format(i))
+		exec("df_name = 'xml_psf_"+flt+"-{0:d}'".format(i))
 		d_psf.to_csv(dir_psf+df_name+'.csv')
 
 
