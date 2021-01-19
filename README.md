@@ -1,5 +1,5 @@
 # HSC_sephot
-(updated on 2021. 1. 4.)
+(updated on 2021. 1. 19.)
 
 
 ## Description
