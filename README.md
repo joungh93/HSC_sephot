@@ -43,6 +43,6 @@ $ ipython
 
 
 ## Future works
-* PSFEx 3.21 (or later) version has different performance for writing output catalog of PSF-selected stars compared to PSFEx 3.17.1 (stable version for Redhat Linux). I will add the version dependencies to this Python code sequence.
+* PSFEx 3.21 (or later) version has different performance for writing output catalog of PSF-selected stars compared to PSFEx 3.17.1 (stable version for Redhat Linux). I will consider this version dependency in the Python code sequence.
 
 :smiley:
