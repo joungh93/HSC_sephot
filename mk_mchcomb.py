@@ -14,7 +14,8 @@ import numpy as np
 import glob, os, copy
 import pandas as pd
 from astropy.io import fits
-from astropy.convolution import Gaussian2DKernel, convolve
+from astropy.convolution import Gaussian2DKernel
+from astropy.convolution import convolve
 
 import init_cfg as ic
 
@@ -33,7 +34,7 @@ for i in np.arange(len(ic.fields)):
 	print("\n----- Field : "+ic.fields[i]+" -----")
 	for j in np.arange(len(ic.filters)):
 		flt = ic.filters[j].split('-')[1]
-		xml_psf = pd.read_csv(dir_psf+"xml_psf_"+flt+f"{i:d}.csv")
+		xml_psf = pd.read_csv(dir_psf+"xml_psf_"+flt+f"-{i:d}.csv")
 		fwhm_in[i,j] = xml_psf['FWHM_Mean'].values[0]
 		print(ic.filters[j]+f" mean PSF FWHM : {fwhm_in[i,j]:.3f} pix")
 fwhm_out = np.max(fwhm_in, axis=1)
